@@ -1,0 +1,29 @@
+---
+apiVersion: policy.open-cluster-management.io/v1beta1
+kind: OperatorPolicy
+metadata:
+  name: cert-manager-operator-install
+spec:
+  complianceType: musthave
+  complianceConfig:
+    catalogSourceUnhealthy: NonCompliant
+    deploymentsUnavailable: NonCompliant
+    upgradesAvailable: Compliant
+  remediationAction: enforce
+  removalBehavior:
+    clusterServiceVersions: Delete
+    customResourceDefinitions: Delete
+    operatorGroups: DeleteIfUnused
+    subscriptions: Delete
+  severity: critical
+  upgradeApproval: Automatic
+  subscription:
+    channel: stable-v1.16
+    name: openshift-cert-manager-operator
+    namespace: cert-manager-operator
+    source: redhat-operators
+    sourceNamespace: openshift-marketplace
+    config:
+      env:
+        - name: TRUSTED_CA_CONFIGMAP_NAME
+          value: trusted-ca
