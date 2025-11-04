@@ -4,9 +4,18 @@ kind: PolicyGenerator
 metadata:
   name: gen-policy-certmanager
 policyDefaults:
-  namespace: bry-tam-policies
+  namespace: acm-policies
   remediationAction: enforce
   consolidateManifests: false
+
+  placement:
+    name: env-bound-placement
+    labelSelector:
+      matchExpressions:
+        - key: environment
+          operator: In
+          values: ["prod"]
+
   policySets:
     - cert-manager
 
