@@ -28,15 +28,7 @@ The enviremont has 3 clusters, with the following naming:
 - prod-cluster: spoke cluster. For placement porpuses will be labeled with environment: prod
 - dev-cluster: spoke cluster. For placement porpuses will be labeled with environment: dev
 
-# How to use this Repository
-
-## Summary of Configuration:
-??1. Configure ArgoCD instance to use the PolicyGenerator plugin.
-??1. Create the manifests of the bootstrap
-
-??1. Label the target managed clusters with `environment=prod` (or adjust in policy-generator.yaml).
-
-## Detailed Configuration
+# Configuration
 
 1. Login to ACM HUB cluster
 
@@ -47,7 +39,7 @@ The enviremont has 3 clusters, with the following naming:
 2. Clone Git
     
     ```
-    git clone https://github.com/luisevm/acm-policies-gitops.git
+    git clone https://github.com/luisevm/acm-gitops-demo
     ```
 
 3. Install Openshift-Gitops in ACM HUB cluster
@@ -181,10 +173,10 @@ The enviremont has 3 clusters, with the following naming:
 
     a.
     ```
-    oc create -f bootstrap/app/40-applicationset-governance.yaml
+    oc create -f bootstrap/app/application.yml
     ```
 
-    b. Check that the AplicationSet was created that it created one Application per each Policy
+    b. Check that the AplicationSet was created
 
     ```
     oc -n openshift-gitops get applications.argoproj.io
