@@ -207,8 +207,8 @@ Example to troubleshoot the Policy to audit the presence of the OpenShift-Gitops
 1. On the ACM HUB cluster
 
     ```bash
-    oc -n acm-policy get policy
-    oc -n acm-policy describe policy policy-audit-gitops-operator
+    oc -n acm-policies get policy
+    oc -n acm-policies describe policy policy-audit-gitops-operator
     ```
 
     ```bash
