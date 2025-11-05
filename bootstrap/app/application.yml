@@ -11,7 +11,7 @@ spec:
         repoURL: https://github.com/luisevm/acm-gitops-demo.git
         revision: main
         directories:
-          - path: ../operators/cert-manager/*
+          - path: ../operators/cert-manager/
   template:
     metadata:
       # The name of the generated Application. '{{path.basename}}' is a parameter
@@ -23,8 +23,8 @@ spec:
       #  argocd.argoproj.io/applicationset: appset-policies
       annotations:
         # ?????make acm applications UI to show the new application
-        apps.open-cluster-management.io/ocm-managed-cluster: local-cluster
-        apps.open-cluster-management.io/ocm-managed-cluster-app-namespace: openshift-gitops
+        #apps.open-cluster-management.io/ocm-managed-cluster: local-cluster
+        #apps.open-cluster-management.io/ocm-managed-cluster-app-namespace: openshift-gitops
 
     spec:
       # The Argo CD project for the generated Application.

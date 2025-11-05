@@ -169,6 +169,30 @@ The enviremont has 3 clusters, with the following naming:
     oc create -f bootstrap/clustergroups/51-mcsb-mcedev.yaml
     ```
 
+    ```bash
+    #Give admin user the permitions to create policies with the policyGenerator - required for the RedHat demo platform
+    cat << EOF | oc apply -f -
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: open-cluster-management:subscription-admin
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: open-cluster-management:subscription-admin
+    subjects:
+    - apiGroup: rbac.authorization.k8s.io
+      kind: User
+      name: kube:admin
+    - apiGroup: rbac.authorization.k8s.io
+      kind: User
+      name: system:admin
+    - apiGroup: rbac.authorization.k8s.io
+      kind: User
+      name: admin
+    EOF
+    ```
+
 7.Create Placements
 
     a.
