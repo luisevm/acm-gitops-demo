@@ -74,8 +74,8 @@ The enviremont has 3 clusters, with the following naming:
     a. Find the imageContainer version for your ACM version:
     - Open https://catalog.redhat.com
     - Search by image multicluster-operators-subscription
-    - Check the image versions available and select the image name that match your ACM version, in my case ACM version is 2.14 and the correspondent image is registry.redhat.io/rhacm2/multicluster-operators-subscription-rhel9:2.14.0-1752502331.
-
+    - Check the image versions available and select the image name that match your ACM version, in my case ACM version is 2.14 and the correspondent image is: registry.redhat.io/rhacm2/multicluster-operators-subscription-rhel9:v2.14
+    
     b. Patch the ArgoCD adding the following configuration to the existing ArgoCD manifest:
     - Edit ArgoCD instance - in my case Im using the instance running in openshift-gitops namespace
         ```bash
@@ -101,7 +101,7 @@ The enviremont has 3 clusters, with the following naming:
               - cp /policy-generator/PolicyGenerator-not-fips-compliant /policy-generator-tmp/PolicyGenerator
               command:
               - /bin/bash
-              image: registry.redhat.io/rhacm2/multicluster-operators-subscription-rhel9:2.14.0-1752502331
+              image: registry.redhat.io/rhacm2/multicluster-operators-subscription-rhel9:v2.14
               name: policy-generator-install
               volumeMounts:
               - mountPath: /policy-generator-tmp
@@ -114,7 +114,7 @@ The enviremont has 3 clusters, with the following naming:
               name: policy-generator
         ```
 
-    c. Check that the ArgoCD instance restarts and that is goes running again
+    c. Check that the ArgoCD instance restarts and that is goes running again, pod "openshift-gitops-repo-server"
 
     ```
     oc -n openshift-gitops get pods
