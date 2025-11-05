@@ -179,13 +179,13 @@ The enviremont has 3 clusters, with the following naming:
     b. 
 
     ```
-    oc create -f bootstrap/placements/policyset.yml
+    #oc create -f bootstrap/placements/policyset.yml
     ```
 
     c. 
 
     ```
-    oc create -f bootstrap/placements/placementbinding.yml
+    #oc create -f bootstrap/placements/placementbinding.yml
     ```
 
 8. Create ApplicationSet
