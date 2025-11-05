@@ -11,7 +11,7 @@ spec:
         repoURL: https://github.com/luisevm/acm-gitops-demo.git
         revision: main
         directories:
-          - path: ../operators/cert-manager/
+          - path: /operators/*
   template:
     metadata:
       # The name of the generated Application. '{{path.basename}}' is a parameter

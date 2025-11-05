@@ -1,8 +1,0 @@
-apiVersion: cluster.open-cluster-management.io/v1
-kind: ManagedCluster
-metadata:
-  #This must be the name of the cluster
-  name: snoab1 
-  labels:
-    cluster.open-cluster-management.io/clusterset: mceprod
-    environment: prod
