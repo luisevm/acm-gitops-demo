@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: appset-spoke-policies
+  name: appset-spoke-policies2
   # The namespace where this ApplicationSet and its generated Applications will be created.
   # ??????????? open-cluster-management-gitops
   namespace: openshift-gitops
