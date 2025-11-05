@@ -216,7 +216,7 @@ The enviremont has 3 clusters, with the following naming:
 
     a.
     ```
-    oc create -f bootstrap/app/application.yml
+    oc create -f app/application.yml
     ```
 
     b. Check that the AplicationSet was created
