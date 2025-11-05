@@ -169,6 +169,12 @@ The enviremont has 3 clusters, with the following naming:
     oc create -f bootstrap/clustergroups/51-mcsb-mcedev.yaml
     ```
 
+    i.
+    ```
+    oc create -f bootstrap/clustergroups/10-rbac-allow-argocd-recreation-objs.yaml
+    ```
+
+    j.
     ```bash
     #Give admin user the permitions to create policies with the policyGenerator - required for the RedHat demo platform
     cat << EOF | oc apply -f -
