@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: appset-spoke-policies2
+  name: appset-spoke-policies
   # The namespace where this ApplicationSet and its generated Applications will be created.
   # ??????????? open-cluster-management-gitops
   namespace: openshift-gitops
@@ -11,7 +11,7 @@ spec:
         repoURL: https://github.com/luisevm/acm-gitops-demo.git
         revision: main
         directories:
-          - path: operators/*
+          - path: operators/cert-manager/
   template:
     metadata:
       # The name of the generated Application. '{{path.basename}}' is a parameter

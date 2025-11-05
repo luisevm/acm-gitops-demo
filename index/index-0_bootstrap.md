@@ -259,12 +259,12 @@ Example to troubleshoot the Policy to audit the presence of the OpenShift-Gitops
     ```
 
     ```bash
-    oc -n acm-policy get placement
-    oc -n acm-policy describe placement gitops-targets
+    oc -n acm-policies get placement
+    oc -n acm-policies describe placement gitops-targets
     ```
 
     ```bash
-    oc -n acm-policy get placementdecision
+    oc -n acm-policies get placementdecision
     ```
 
     ```bash
