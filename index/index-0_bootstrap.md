@@ -169,7 +169,26 @@ The enviremont has 3 clusters, with the following naming:
     oc create -f bootstrap/clustergroups/51-mcsb-mcedev.yaml
     ```
 
-7. Create ApplicationSet
+7.Create Placements
+
+    a.
+    ```
+    oc create -f bootstrap/placements/placement.yml
+    ```
+
+    b. 
+
+    ```
+    oc create -f bootstrap/placements/policyset.yml
+    ```
+
+    c. 
+
+    ```
+    oc create -f bootstrap/placements/placementbinding.yml
+    ```
+
+8. Create ApplicationSet
 
     a.
     ```
