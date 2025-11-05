@@ -1,0 +1,87 @@
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: gen-policy-certmanager
+policyDefaults:
+  namespace: acm-policies
+  remediationAction: enforce
+  consolidateManifests: false
+
+  placement:
+    name: env-bound-placement
+    # labelSelector:
+    #   matchExpressions:
+    #     - key: environment
+    #       operator: In
+    #       values: ["prod"]
+
+  policySets:
+    - cert-manager
+
+  categories:
+    - "CM Configuration Management"
+  controls:
+    - "CM-2 Baseline Configuration"
+  standards:
+    - "NIST SP 800-53"
+
+  policyLabels:
+    policy_gen.name: cert-manager-operator
+
+  severity: medium
+
+placementBindingDefaults:
+  name: "cert-manager-binding"
+
+policies:
+  - name: cert-manager-operator
+    description: "Installs cert-manager operator and monitoring"
+    remediationAction: enforce
+    manifests:
+      - path: manifests/namespace.yml
+        name: cert-manager-operator #cert-manger-operator-namespace
+
+      - path: manifests/trusted-ca-configmap.yml
+        name: trusted-ca-configmap
+
+      - path: manifests/operatorpolicy.yml
+        name: cert-manager-operator-install
+
+      - path: manifests/health/cert-manager-status.yml
+        name: cert-manager-status
+        remediationAction: InformOnly
+
+      - path: manifests/monitoring/namespace.yml
+        name: cert-manager-namespace
+
+      - path: manifests/monitoring/role.yml
+        name: cert-manager-monitor-role
+
+      - path: manifests/monitoring/rolebinding.yml
+        name: cert-manager-monitor-rolebinding
+
+      - path: manifests/monitoring/servicemonitor.yml
+        name: cert-manager-monitor-servicemonitor
+
+  - name: cert-manager-clusterissuer
+    description: "Deploys example CA based ClusterIssuer"
+    remediationAction: enforce
+    dependencies:
+      - name: 	cert-manager-operator
+        compliance: Compliant
+    manifests:
+      - path: manifests/ca-clusterissuer/ca-clusterissuer-secret.yml
+        name: ca-clusterissuer-secret
+
+      - path: manifests/ca-clusterissuer/ca-clusterissuer.yml
+        name: ca-clusterissuer
+        extraDependencies:
+          - name: ca-clusterissuer-secret
+            kind: ConfigurationPolicy
+            compliance: "Compliant"
+
+policySets:
+  - name: cert-manager
+    placement:
+      placementName: "env-bound-placement"

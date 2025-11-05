@@ -1,0 +1,20 @@
+oc new-project certificatetest
+
+oc apply -f - <<'EOF'
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ingress-wildcard-cert
+  namespace: certificatetest
+spec:
+  isCA: false
+  commonName: "mytest.bry-tam.redhat.com"
+  dnsNames:
+    - mytest.bry-tam.redhat.com
+  usages:
+    - server auth
+  issuerRef:
+    kind: ClusterIssuer
+    name: ca-clusterissuer
+  secretName: ingress-wildcard-tls
+EOF
