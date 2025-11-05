@@ -198,7 +198,7 @@ The enviremont has 3 clusters, with the following naming:
     b. Check that the AplicationSet was created
 
     ```
-    oc -n openshift-gitops get applications.argoproj.io
+    oc -n openshift-gitops get applicationsets.argoproj.io appset-spoke-policies
     ```
 
 # Troubleshoot
