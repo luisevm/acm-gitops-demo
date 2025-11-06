@@ -10,11 +10,12 @@ policyDefaults:
 
   placement:
     name: env-bound-placement
-    # labelSelector:
-    #   matchExpressions:
-    #     - key: environment
-    #       operator: In
-    #       values: ["prod"]
+    labelSelector:
+      matchExpressions:
+      - key: environment
+        operator: In
+        values:
+          - prod
 
   policySets:
     - cert-manager
