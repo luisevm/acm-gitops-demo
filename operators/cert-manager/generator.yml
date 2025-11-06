@@ -8,6 +8,13 @@ policyDefaults:
   remediationAction: enforce
   consolidateManifests: false
 
+  #dont generate placement
+  generatePolicyPlacement: false
+  generatePlacementWhenInSet: false
+
+  placement:
+    placementName: env-bound-placement
+        
 #  placement:
 #    name: env-bound-placement
 #    labelSelector:
@@ -25,15 +32,15 @@ policyDefaults:
 #          values:
 #            - prod
 
-  placement:
-    name: env-bound-placement
-    clusterSets:
-    - mceprod
-    predicates:
-    - requiredClusterSelector:
-        labelSelector:
-        matchLabels:
-          environment: prod
+#  placement:
+#    name: env-bound-placement
+#    clusterSets:
+#    - mceprod
+#    predicates:
+#    - requiredClusterSelector:
+#        labelSelector:
+#        matchLabels:
+#          environment: prod
 
 #  placement:
 #    name: env-bound-placement
@@ -116,6 +123,9 @@ policies:
 #    placement:
 #      placementName: "env-bound-placement"
 
+
 policySetDefaults:
-  #instruct policygenerator to not create the placementbinding.
+#instruct policygenerator to not create the placementbinding.
   generatePolicySetPlacement: false
+
+  

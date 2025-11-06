@@ -6,3 +6,4 @@ metadata:
 spec:
   policies:
     - cert-manager-operator
+    - cert-manager-clusterissuer

@@ -1,3 +1,31 @@
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: env-bound-placement
+  namespace: acm-policies
+spec:
+  clusterSets:
+  - mceprod
+  predicates:
+  - requiredClusterSelector:
+      labelSelector:
+        matchLabels:
+          environment: prod
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: cert-manager-binding
+  namespace: acm-policies
+placementRef:
+  apiGroup: cluster.open-cluster-management.io
+  kind: Placement
+  name: env-bound-placement
+subjects:
+- apiGroup: policy.open-cluster-management.io
+  kind: PolicySet
+  name: cert-manager
+---
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
@@ -274,3 +302,13 @@ spec:
                   app.kubernetes.io/name: cert-manager
         remediationAction: enforce
         severity: medium
+---
+apiVersion: policy.open-cluster-management.io/v1beta1
+kind: PolicySet
+metadata:
+  name: cert-manager
+  namespace: acm-policies
+spec:
+  policies:
+  - cert-manager-operator
+  - cert-manager-clusterissuer
