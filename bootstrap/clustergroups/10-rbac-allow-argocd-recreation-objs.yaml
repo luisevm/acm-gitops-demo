@@ -1,57 +1,57 @@
----
+#---
 # clusterrole: allow delete/update on CRDs and webhookconfs
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: argocd-certmanager-cluster-scope
-rules:
-  - apiGroups: ["admissionregistration.k8s.io"]
-    resources: ["mutatingwebhookconfigurations","validatingwebhookconfigurations"]
-    verbs: ["get","list","watch","create","update","patch","delete"]
-  - apiGroups: ["apiextensions.k8s.io"]
-    resources: ["customresourcedefinitions"]
-    verbs: ["get","list","watch","create","update","patch","delete"]
----
+#apiVersion: rbac.authorization.k8s.io/v1
+#kind: ClusterRole
+#metadata:
+#  name: argocd-certmanager-cluster-scope
+#rules:
+#  - apiGroups: ["admissionregistration.k8s.io"]
+#    resources: ["mutatingwebhookconfigurations","validatingwebhookconfigurations"]
+#    verbs: ["get","list","watch","create","update","patch","delete"]
+#  - apiGroups: ["apiextensions.k8s.io"]
+#    resources: ["customresourcedefinitions"]
+#    verbs: ["get","list","watch","create","update","patch","delete"]
+#---
 # bind it to the Argo CD app-controller SA
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: argocd-certmanager-cluster-scope
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: argocd-certmanager-cluster-scope
-subjects:
-  - kind: ServiceAccount
-    name: openshift-gitops-argocd-application-controller
-    namespace: openshift-gitops
----
+#apiVersion: rbac.authorization.k8s.io/v1
+#kind: ClusterRoleBinding
+#metadata:
+#  name: argocd-certmanager-cluster-scope
+#roleRef:
+#  apiGroup: rbac.authorization.k8s.io
+#  kind: ClusterRole
+#  name: argocd-certmanager-cluster-scope
+#subjects:
+#  - kind: ServiceAccount
+#    name: openshift-gitops-argocd-application-controller
+#    namespace: openshift-gitops
+#---
 # role in the cert-manager namespace
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: argocd-certmanager-ns-scope
-  namespace: cert-manager
-rules:
-  - apiGroups: [""]
-    resources: ["services","serviceaccounts"]
-    verbs: ["get","list","watch","create","update","patch","delete"]
-  - apiGroups: ["apps"]
-    resources: ["deployments"]
-    verbs: ["get","list","watch","create","update","patch","delete"]
----
+#apiVersion: rbac.authorization.k8s.io/v1
+#kind: Role
+#metadata:
+#  name: argocd-certmanager-ns-scope
+#  namespace: cert-manager
+#rules:
+#  - apiGroups: [""]
+#    resources: ["services","serviceaccounts"]
+#    verbs: ["get","list","watch","create","update","patch","delete"]
+#  - apiGroups: ["apps"]
+#    resources: ["deployments"]
+#    verbs: ["get","list","watch","create","update","patch","delete"]
+#---
 # bind it to the Argo CD app-controller SA
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: argocd-certmanager-ns-scope
-  namespace: cert-manager
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: argocd-certmanager-ns-scope
-subjects:
-  - kind: ServiceAccount
-    name: openshift-gitops-argocd-application-controller
-    namespace: openshift-gitops
+#apiVersion: rbac.authorization.k8s.io/v1
+#kind: RoleBinding
+#metadata:
+#  name: argocd-certmanager-ns-scope
+#  namespace: cert-manager
+#roleRef:
+#  apiGroup: rbac.authorization.k8s.io
+#  kind: Role
+#  name: argocd-certmanager-ns-scope
+#subjects:
+#  - kind: ServiceAccount
+#    name: openshift-gitops-argocd-application-controller
+#    namespace: openshift-gitops
 

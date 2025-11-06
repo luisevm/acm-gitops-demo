@@ -1,11 +1,13 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: application-certmanager
   namespace: openshift-gitops
 spec:
   destination:
     namespace: acm-policies
+    #namespace: openshift-gitops
     server: https://kubernetes.default.svc
   project: default
   source:
@@ -15,6 +17,6 @@ spec:
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
+      selfHeal: false
     syncOptions:
     - CreateNamespace=true

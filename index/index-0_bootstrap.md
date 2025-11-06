@@ -82,6 +82,7 @@ commonAnnotations:
 
     Documentation reference link: [Integrating the Policy Generator with OpenShift GitOps](https://docs.redhat.com/en/documentation/red_hat_advanced_cluster_management_for_kubernetes/2.13/html/gitops/gitops-overview#integrate-pol-gen-ocp-gitops) and [chapter](https://docs.redhat.com/en/documentation/red_hat_advanced_cluster_management_for_kubernetes/2.13/html/gitops/gitops-overview#gitops-policy-definitions).
 
+
     a. Find the imageContainer version for your ACM version:
     - Open https://catalog.redhat.com
     - Search by image multicluster-operators-subscription
