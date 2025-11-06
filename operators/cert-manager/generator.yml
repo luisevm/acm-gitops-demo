@@ -8,14 +8,22 @@ policyDefaults:
   remediationAction: enforce
   consolidateManifests: false
 
+#  placement:
+#    name: env-bound-placement
+#    labelSelector:
+#      matchExpressions:
+#      - key: environment
+#        operator: In
+#        values: ["prod"]
+
   placement:
     name: env-bound-placement
     labelSelector:
       matchExpressions:
-      - key: environment
-        operator: In
-        values:
-          - prod
+        - key: environment
+          operator: In
+          values:
+            - "prod"
 
   policySets:
     - cert-manager
@@ -82,7 +90,8 @@ policies:
             kind: ConfigurationPolicy
             compliance: "Compliant"
 
-policySets:
-  - name: cert-manager
-    placement:
-      placementName: "env-bound-placement"
+#to reuse an existing placement
+#policySets:
+#  - name: cert-manager
+#    placement:
+#      placementName: "env-bound-placement"
