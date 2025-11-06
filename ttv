@@ -4,13 +4,18 @@ metadata:
   name: env-bound-placement
   namespace: acm-policies
 spec:
-  clusterSets:
-  - mceprod
   predicates:
   - requiredClusterSelector:
       labelSelector:
-        matchLabels:
-          environment: prod
+        matchExpressions:
+        - key: environment
+          operator: In
+          values:
+          - prod
+        - key: local-cluster
+          operator: NotIn
+          values:
+          - "true"
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
