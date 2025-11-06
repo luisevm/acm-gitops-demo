@@ -8,13 +8,13 @@ policyDefaults:
   remediationAction: enforce
   consolidateManifests: false
 
-  placement:
-    name: env-bound-placement
-    labelSelector:
-      matchExpressions:
-      - key: environment
-        operator: In
-        values: ["prod"]
+#  placement:
+#    name: env-bound-placement
+#    labelSelector:
+#      matchExpressions:
+#      - key: environment
+#        operator: In
+#        values: ["prod"]
 
 #  placement:
 #    name: env-bound-placement
@@ -24,6 +24,25 @@ policyDefaults:
 #          operator: In
 #          values:
 #            - prod
+
+  placement:
+    name: env-bound-placement
+    clusterSets:
+    - mceprod
+    predicates:
+    - requiredClusterSelector:
+        labelSelector:
+        matchLabels:
+          environment: prod
+
+#  placement:
+#    name: env-bound-placement
+#    clusterSets:
+#      - mceprod
+#    labelSelector:
+#      matchLabels:
+#        environment: prod
+
 
 #  policySets:
 #    - cert-manager

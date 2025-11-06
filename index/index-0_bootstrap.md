@@ -95,6 +95,9 @@ commonAnnotations:
         ```
     - Patch ArgoCD, to configure OpenShift GitOps:
         ```bash
+oc -n openshift-gitops patch argocd openshift-gitops \
+  --type=merge --patch-file bootstrap/gitops/30-argocd-patch.yaml
+
         oc -n openshift-gitops patch argocd openshift-gitops --type merge --patch bootstrap/gitops/30-argocd-patch.yaml
         ```
 
