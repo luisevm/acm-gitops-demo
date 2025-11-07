@@ -1,32 +1,50 @@
 
+
+
 # Disclosure
 
-Opinions expressed in this blog are my own and do not necessarily reflect that of the company I work for.
+This repository is a personal space to share technical ideas, notes, and experiments. The content reflects my own views and understanding, and should not be taken as the official position of my employer. Please feel free to explore, adapt, and use what is helpful for your own work.
+
+# Cert-Manager Operator
+
+Deploys the cert-manager Operator along with a sample ClusterIssuer making use of same CA certificate.
+Dependencies
+
+    None
+
+Details
+
+ACM Minimal Version: 2.14
+
+Documentation: latest
+
+Notes:
+
+    ClusterIssuer is using a self-signed CA file. Production environments should use an appropriate PKI
+    Policy configures cluster-monitoring to scrape cert-manager. There are no rules or alerts, only the ServiceMonitor to scrape cert-manager
+    Configures cert-manager to include the cluster trusted-ca bundle. This shouldn't hurt if you don't have a ca applied through the cluster-proxy.
+    Requires 2.14 to make use of the fail function when there are no deployments to cert-manager namespace.
+
+
+
 
 # Introduction
 
-This repository demonstrates how to use Red Hat Advanced Cluster Management (ACM) together with GitOps (Argo CD ApplicationSet push model) and PolicyGenerator to deploy policies to selected spoke clusters.
-
-An ApplicationSet using the Git directory generator is configured to deploy all policies defined under policies/*. For each policy, the ApplicationSet automatically creates an Application that ensures the policy is applied to the target clusters.
-
-Repository structure example:
-- boostrap/app directory: contains the ApplicationSet manifests
-- boostrap/clustergroups directory: contains the MCE .....
-- policies/*: Contains the Polcies that will be enforced, each child directory is one policy.
+This repository demonstrates how to use RH ACM together with GitOps and PolicyGenerator to deploy policies to selected spoke clusters.
 
 
 # Prerequisites
 
 Before using this repository, make sure you have:
 - A running OpenShift cluster with Red Hat ACM installed.
-- Two or more spoke clusters already imported into ACM. This repo expects that one cluster is named prod-cluster and other named dev-cluster, besides the local-cluster/ACM HUB cluster
+- One spoke clusters already imported into ACM. This repo expects that one cluster is named prod-cluster, besides the local-cluster/ACM HUB cluster
 
 # LAB Architecture 
 
 The enviremont has 3 clusters, with the following naming: 
 - local-cluster: this is the ACM HUB cluster (cluster where ACM is installed)
 - prod-cluster: spoke cluster. For placement porpuses will be labeled with environment: prod
-- dev-cluster: spoke cluster. For placement porpuses will be labeled with environment: dev
+
 
 # Configuration
 
@@ -69,7 +87,6 @@ The enviremont has 3 clusters, with the following naming:
 
 5. Configure ArgoCD instance to use the PolicyGenerator plugin.
 
-
 ???
 . Note that in order for ArgoCD to not constantly delete this distributed policy or show that the ArgoCD Application is out of sync, the following parameter value was added to the kustomization.yaml file to set the IgnoreExtraneous option on the policy:
 commonAnnotations:
@@ -92,47 +109,12 @@ commonAnnotations:
     - Edit the patch file and customize the image name
     
         ```bash
+        #replace the image
         vi bootstrap/gitops/30-argocd-patch.yaml
         ```
     - Patch ArgoCD, to configure OpenShift GitOps:
         ```bash
-oc -n openshift-gitops patch argocd openshift-gitops \
-  --type=merge --patch-file bootstrap/gitops/30-argocd-patch.yaml
-
-        oc -n openshift-gitops patch argocd openshift-gitops --type merge --patch bootstrap/gitops/30-argocd-patch.yaml
-        ```
-
-
-
-        ```
-        apiVersion: argoproj.io/v1beta1
-        kind: ArgoCD
-        metadata:
-          name: openshift-gitops
-          namespace: openshift-gitops
-        spec:
-          kustomizeBuildOptions: --enable-alpha-plugins
-          repo:
-            env:
-            - name: KUSTOMIZE_PLUGIN_HOME
-              value: /etc/kustomize/plugin
-            initContainers:
-            - args:
-              - -c
-              - cp /policy-generator/PolicyGenerator-not-fips-compliant /policy-generator-tmp/PolicyGenerator
-              command:
-              - /bin/bash
-              image: registry.redhat.io/rhacm2/multicluster-operators-subscription-rhel9:v2.14
-              name: policy-generator-install
-              volumeMounts:
-              - mountPath: /policy-generator-tmp
-                name: policy-generator
-            volumeMounts:
-            - mountPath: /etc/kustomize/plugin/policy.open-cluster-management.io/v1/policygenerator
-              name: policy-generator
-            volumes:
-            - emptyDir: {}
-              name: policy-generator
+        oc -n openshift-gitops patch argocd openshift-gitops --type=merge --patch-file bootstrap/gitops/30-argocd-patch.yaml
         ```
 
     c. Check that the ArgoCD instance restarts and that is goes running again, pod "openshift-gitops-repo-server"
@@ -168,16 +150,16 @@ oc -n openshift-gitops patch argocd openshift-gitops \
 
     e.
     ```
-    oc create -f bootstrap/clustergroups/40-mc-mcprod.yaml
     oc label managedcluster prod-cluster cluster.open-cluster-management.io/clusterset=mceprod --overwrite
     oc label ManagedCluster prod-cluster environment=prod
+    #oc create -f bootstrap/clustergroups/40-mc-mcprod.yaml
     ```
 
     f.
     ```
-    oc create -f bootstrap/clustergroups/41-mc-mcdev.yaml 
     oc label managedcluster dev-cluster cluster.open-cluster-management.io/clusterset=mcedev --overwrite
     oc label ManagedCluster dev-cluster environment=dev
+    #oc create -f bootstrap/clustergroups/41-mc-mcdev.yaml 
     ```
 
     g.
@@ -192,12 +174,12 @@ oc -n openshift-gitops patch argocd openshift-gitops \
 
     i.
     ```
-    oc create -f bootstrap/clustergroups/10-rbac-allow-argocd-recreation-objs.yaml
+    #oc create -f bootstrap/clustergroups/10-rbac-allow-argocd-recreation-objs.yaml
     ```
 
     j.
     ```bash
-    #Give admin user the permitions to create policies with the policyGenerator - required for the RedHat demo platform
+    #(Required for the RedHat demo platform) - Give admin user the permitions to create policies with the policyGenerator
     cat << EOF | oc apply -f -
     apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRoleBinding
@@ -220,36 +202,36 @@ oc -n openshift-gitops patch argocd openshift-gitops \
     EOF
     ```
 
-7.Create Placements
+#7.Create Placements
 
-    a.
+    #a.
     ```
     #oc create -f bootstrap/placements/placement.yml
     ```
 
-    b. 
+    #b. 
 
     ```
     #oc create -f bootstrap/placements/policyset.yml
     ```
 
-    c. 
+    #c. 
 
     ```
     #oc create -f bootstrap/placements/placementbinding.yml
     ```
 
-8. Create ApplicationSet
+8. Create Application
 
     a.
     ```
-    oc create -f app/application.yml
+    oc create -f app/application2.yml
     ```
 
-    b. Check that the AplicationSet was created
+    b. Check that the Aplication was created
 
     ```
-    oc -n openshift-gitops get applicationsets.argoproj.io appset-spoke-policies
+    oc -n openshift-gitops get applications.argoproj.io appset-spoke-policies
     ```
 
 # Troubleshoot
@@ -259,7 +241,7 @@ Example to troubleshoot the Policy to audit the presence of the OpenShift-Gitops
 
     ```bash
     oc -n acm-policies get policy
-    oc -n acm-policies describe policy policy-audit-gitops-operator
+    oc -n acm-policies describe policy <...>
     ```
 
     ```bash
@@ -268,10 +250,8 @@ Example to troubleshoot the Policy to audit the presence of the OpenShift-Gitops
 
     #Verify that ApplicationSet was deployed
     ```bash
-    oc -n openshift-gitops describe applicationset 
+    oc -n openshift-gitops describe application
     ```
-
-    #Open ArgoCD UI in a browser and verify all the Applications deployed
 
     #Verify Applications are created for each policy:
 
@@ -298,7 +278,7 @@ Example to troubleshoot the Policy to audit the presence of the OpenShift-Gitops
     #Verify Policy was propagated to the spoke cluster
     ```bash
     oc -n prod-cluster get policy
-    oc -n prod-cluster describe policy acm-policies.policy-audit-gitops-operator
+    oc -n prod-cluster describe policy <...>
     ```
 
     #Look at policy-controller logs on the spoke
