@@ -87,18 +87,9 @@ The enviremont has 3 clusters, with the following naming:
 
 5. Configure ArgoCD instance to use the PolicyGenerator plugin.
 
-???
-. Note that in order for ArgoCD to not constantly delete this distributed policy or show that the ArgoCD Application is out of sync, the following parameter value was added to the kustomization.yaml file to set the IgnoreExtraneous option on the policy:
-commonAnnotations:
-  argocd.argoproj.io/compare-options: IgnoreExtraneous
-???
-
-@@@@@@@@@@@@@@
-
     In order for OpenShift GitOps to have access to the policy generator when you run Kustomize, an Init Container is required to copy the policy generator binary from the RHACM Application Subscription container image to the OpenShift GitOps container that runs Kustomize. Additionally, OpenShift GitOps must be configured to provide the --enable-alpha-plugins flag when you run Kustomize. 
 
     Documentation reference link: [Integrating the Policy Generator with OpenShift GitOps](https://docs.redhat.com/en/documentation/red_hat_advanced_cluster_management_for_kubernetes/2.13/html/gitops/gitops-overview#integrate-pol-gen-ocp-gitops) and [chapter](https://docs.redhat.com/en/documentation/red_hat_advanced_cluster_management_for_kubernetes/2.13/html/gitops/gitops-overview#gitops-policy-definitions).
-
 
     a. Find the imageContainer version for your ACM version:
     - Open https://catalog.redhat.com
