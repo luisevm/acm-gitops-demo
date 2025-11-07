@@ -197,7 +197,7 @@ The enviremont has 3 clusters, with the following naming:
     EOF
     ```
 
-#7.Create Placements
+#7. Create Placements
 
     #a.
     ```
@@ -216,7 +216,7 @@ The enviremont has 3 clusters, with the following naming:
     #oc create -f bootstrap/placements/placementbinding.yml
     ```
 
-8.Create Application
+8. Create Application
 
     a.
     ```
