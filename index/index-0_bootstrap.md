@@ -162,13 +162,17 @@ The enviremont has 3 clusters, with the following naming:
     ```
     oc create -f bootstrap/clustergroups/51-mcsb-mcedev.yaml
     ```
+!!!!    i.
+    ```
+    #oc create -f bootstrap/clustergroups/50-mcsb-mceprod_ocpgitops.yaml 
+    ```
 
-    i.
+    j.
     ```
     #oc create -f bootstrap/clustergroups/10-rbac-allow-argocd-recreation-objs.yaml
     ```
 
-    j.
+    k.
     ```bash
     #(Required for the RedHat demo platform) - Give admin user the permitions to create policies with the policyGenerator
     cat << EOF | oc apply -f -
@@ -340,4 +344,3 @@ Example to troubleshoot the Policy to audit the presence of the OpenShift-Gitops
     oc extract secret/mycertificate-tls -n certificatetest
     openssl x509 -in ca.crt  -text -noout
     ```
-    
