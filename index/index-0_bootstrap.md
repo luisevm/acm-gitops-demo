@@ -316,27 +316,28 @@ Example to troubleshoot the Policy to audit the presence of the OpenShift-Gitops
     EOF
     ```
 
-4.Check that the Certificate is created
+4. Check that the Certificate is created
 
     ```bash
     oc get certificate mycertificate -n certificatetest
     ```
 
-5.Check that the Certificate is issued
+5. Check that the Certificate is issued
 
     ```bash
     oc get certificate mycertificate -n certificatetest
     ```
 
-6.Check that the Secret containing the certificate is created
+6. Check that the Secret containing the certificate is created
 
     ```bash
     oc get secret mycertificate-tls -n certificatetest
     ```
 
-7.Extract key and check certificate
+7. Extract key and check certificate
 
     ```bash
     oc extract secret/mycertificate-tls -n certificatetest
     openssl x509 -in ca.crt  -text -noout
     ```
+    

@@ -25,9 +25,9 @@ spec:
             - key: environment
               operator: In
               values: ["prod"]
-            - key: local-cluster
-              operator: NotIn
-              values: ["true"]   # no pillar el hub
+#            - key: local-cluster
+#              operator: NotIn
+#              values: ["true"]   # no pillar el hub
 
     #tolerations:
     #  - key: cluster.open-cluster-management.io/unavailable
