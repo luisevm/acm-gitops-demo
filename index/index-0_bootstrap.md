@@ -1,37 +1,27 @@
 
-
-
-# Disclosure
-
-This repository is a personal space to share technical ideas, notes, and experiments. The content reflects my own views and understanding, and should not be taken as the official position of my employer. Please feel free to explore, adapt, and use what is helpful for your own work.
-
 # Cert-Manager Operator
+Deploys the cert-manager Operator along with a sample `ClusterIssuer` making use of same CA certificate.
 
-Deploys the cert-manager Operator along with a sample ClusterIssuer making use of same CA certificate.
-Dependencies
+## Dependencies
+  - None
 
-    None
-
-Details
-
+## Details
 ACM Minimal Version: 2.14
 
-Documentation: latest
+Documentation: [latest](https://docs.redhat.com/en/documentation/openshift_container_platform/latest/html-single/security_and_compliance/index#cert-manager-operator-for-red-hat-openshift)
 
-Notes:
-
-    ClusterIssuer is using a self-signed CA file. Production environments should use an appropriate PKI
-    Policy configures cluster-monitoring to scrape cert-manager. There are no rules or alerts, only the ServiceMonitor to scrape cert-manager
-    Configures cert-manager to include the cluster trusted-ca bundle. This shouldn't hurt if you don't have a ca applied through the cluster-proxy.
-    Requires 2.14 to make use of the fail function when there are no deployments to cert-manager namespace.
-
-
+---
+**Notes:**
+  - `ClusterIssuer` is using a self-signed CA file.  Production environments should use an appropriate PKI
+  - Policy configures cluster-monitoring to scrape cert-manager.  There are no rules or alerts, only the `ServiceMonitor` to scrape cert-manager
+  - Configures cert-manager to include the cluster trusted-ca bundle.  This shouldn't hurt if you don't have a ca applied through the cluster-proxy.
+  - Requires 2.14 to make use of the `fail` function when there are no deployments to cert-manager namespace.
 
 
 # Introduction
+This repository is a personal space to share technical ideas, notes, and experiments. The content reflects my own views and understanding, and should not be taken as the official position of my employer. Please feel free to explore, adapt, and use what is helpful for your own work.
 
 This repository demonstrates how to use RH ACM together with GitOps and PolicyGenerator to deploy policies to selected spoke clusters.
-
 
 # Prerequisites
 
