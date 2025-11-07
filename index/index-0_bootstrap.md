@@ -162,9 +162,9 @@ The enviremont has 3 clusters, with the following naming:
     ```
     oc create -f bootstrap/clustergroups/51-mcsb-mcedev.yaml
     ```
-!!!!    i.
+     i.
     ```
-    #oc create -f bootstrap/clustergroups/50-mcsb-mceprod_ocpgitops.yaml 
+    !!!!#oc create -f bootstrap/clustergroups/50-mcsb-mceprod_ocpgitops.yaml 
     ```
 
     j.
