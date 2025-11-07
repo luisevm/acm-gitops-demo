@@ -282,16 +282,19 @@ Example to troubleshoot the Policy to audit the presence of the OpenShift-Gitops
 # Test that Cert Manager is generating Certificates
 
 1. Login to spoke cluster, named prod-cluster
+
     ```
     oc login -u <user> -p <password> <API_ENDPOINT>
     ```
 
 2. Create a new project
+
     ```bash
     oc new-project certificatetest
     ```
 
 3. Create a new Certificate
+
     ```bash
     oc apply -f - <<'EOF'
     apiVersion: cert-manager.io/v1
@@ -314,16 +317,26 @@ Example to troubleshoot the Policy to audit the presence of the OpenShift-Gitops
     ```
 
 4.Check that the Certificate is created
+
     ```bash
     oc get certificate mycertificate -n certificatetest
     ```
 
 5.Check that the Certificate is issued
+
     ```bash
     oc get certificate mycertificate -n certificatetest
     ```
 
 6.Check that the Secret containing the certificate is created
+
     ```bash
     oc get secret mycertificate-tls -n certificatetest
+    ```
+
+7.Extract key and check certificate
+
+    ```bash
+    oc extract secret/mycertificate-tls -n certificatetest
+    openssl x509 -in ca.crt  -text -noout
     ```
