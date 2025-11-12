@@ -8,52 +8,12 @@ policyDefaults:
   remediationAction: enforce
   consolidateManifests: false
 
-  #dont generate placement
   generatePolicyPlacement: false
   generatePlacementWhenInSet: false
 
   placement:
     placementName: env-bound-placement
-        
-#  placement:
-#    name: env-bound-placement
-#    labelSelector:
-#      matchExpressions:
-#      - key: environment
-#        operator: In
-#        values: ["prod"]
-
-#  placement:
-#    name: env-bound-placement
-#    labelSelector:
-#      matchExpressions:
-#        - key: environment
-#          operator: In
-#          values:
-#            - prod
-
-#  placement:
-#    name: env-bound-placement
-#    clusterSets:
-#    - mceprod
-#    predicates:
-#    - requiredClusterSelector:
-#        labelSelector:
-#        matchLabels:
-#          environment: prod
-
-#  placement:
-#    name: env-bound-placement
-#    clusterSets:
-#      - mceprod
-#    labelSelector:
-#      matchLabels:
-#        environment: prod
-
-
-#  policySets:
-#    - cert-manager
-
+   
   categories:
     - "CM Configuration Management"
   controls:
@@ -116,16 +76,7 @@ policies:
             kind: ConfigurationPolicy
             compliance: "Compliant"
 
-
-#policySets:
-#  - name: cert-manager
-#    #to reuse an existing placement
-#    placement:
-#      placementName: "env-bound-placement"
-
-
 policySetDefaults:
-#instruct policygenerator to not create the placementbinding.
   generatePolicySetPlacement: false
 
   

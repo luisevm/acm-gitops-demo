@@ -62,7 +62,7 @@ The enviremont has 3 clusters, with the following naming:
     oc -n openshift-gitops-operator get csv
     ```
 
-4. Give RBAC to allow the user you login to OpenShift or ArgoCD, to see in ArgoCD the applications created in ACM HUB OpenShift cluster. Replace the user "Admin" with your user.
+4. Give RBAC to allow the user you login with to OpenShift or ArgoCD, to see in ArgoCD the applications created in ACM HUB OpenShift cluster. Replace the user "Admin" with your user.
 
     ```bash
     oc create -f - <<EOF
@@ -158,11 +158,6 @@ The enviremont has 3 clusters, with the following naming:
     ```
 
     j.
-    ```
-    #oc create -f bootstrap/clustergroups/10-rbac-allow-argocd-recreation-objs.yaml
-    ```
-
-    k.
     ```bash
     #(Required for the RedHat demo platform) - Give admin user the permitions to create policies with the policyGenerator
     cat << EOF | oc apply -f -
@@ -187,26 +182,7 @@ The enviremont has 3 clusters, with the following naming:
     EOF
     ```
 
-#7. Create Placements
-
-    #a.
-    ```
-    #oc create -f bootstrap/placements/placement.yml
-    ```
-
-    #b. 
-
-    ```
-    #oc create -f bootstrap/placements/policyset.yml
-    ```
-
-    #c. 
-
-    ```
-    #oc create -f bootstrap/placements/placementbinding.yml
-    ```
-
-8. Create Application
+7. Create Application
 
     a.
     ```

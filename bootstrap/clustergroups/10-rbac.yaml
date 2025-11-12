@@ -1,14 +1,3 @@
-#apiVersion: rbac.authorization.k8s.io/v1
-#kind: ClusterRole
-#metadata:
-#  name: openshift-gitops-policy-admin
-#rules:
-#  - apiGroups: ["policy.open-cluster-management.io"]
-#    resources: ["policies","placementbindings","policysets","policysetbindings"]
-#    verbs: ["get","list","watch","create","update","patch","delete"]
-#  - apiGroups: ["cluster.open-cluster-management.io"]
-#    resources: ["placements","placementdecisions"]   # at least read
-#    verbs: ["get","list","watch","create","update","patch","delete"]
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1

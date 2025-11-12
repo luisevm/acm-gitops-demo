@@ -1,17 +1,4 @@
-#apiVersion: cluster.open-cluster-management.io/v1beta1
-#kind: Placement
-#metadata:
-#  name: env-bound-placement
-#  namespace: acm-policies
-#spec:
-#  clusterSets:
-#    - mceprod
-#  predicates:
-#    - requiredClusterSelector:
-#        labelSelector:
-#          matchLabels:
-#            environment: prod
-
+---
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
@@ -25,12 +12,3 @@ spec:
             - key: environment
               operator: In
               values: ["prod"]
-#            - key: local-cluster
-#              operator: NotIn
-#              values: ["true"]   # no pillar el hub
-
-    #tolerations:
-    #  - key: cluster.open-cluster-management.io/unavailable
-    #    operator: Exists
-    #  - key: cluster.open-cluster-management.io/unreachable
-    #    operator: Exists
